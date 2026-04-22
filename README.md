@@ -1,13 +1,59 @@
 # Porcupine4Win
 
-Set porcupine as your default web browser. When you click a link, porcupine will copy the URL to your clipboard and notify you about this. This way you'll never accidentally open a link you don't want to, and you can easily choose which browser to load it in.
+A "browser" that copies URLs to your clipboard instead of opening them.
+
+Click a link anywhere in Windows — Slack, Teams, email, wherever — and
+it lands in your clipboard. You choose when and where to open it.
+
+Inspired by [porcupine](https://github.com/micahflee/porcupine) by Micah Lee.
+
+## How it works
+
+Porcupine4Win registers itself as Microsoft Edge. When Windows routes a
+link click to "Edge", Porcupine intercepts it, copies the URL to your
+clipboard, and shows a notification. No browser opens.
 
 ## Installation
 
-This setup assumes that you are not using Microsoft Edge at all.
+Run PowerShell as Administrator, then:
 
-1. Download [the binary](https://github.com/cristianrz/porcupine4win/releases)
-2. Make a backup of Microsoft Edge executable on: `C:\Program Files (x86)\Microsoft\Edge\Application`
-3. Replace `C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe` with `porcupine4win.exe`
-4. Make sure Microsft Edge is your default browser
-5. Profit
+```powershell
+Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
+.\install.ps1
+```
+
+Then go to **Settings → Apps → Default apps** and set Microsoft Edge as
+your default browser if it isn't already.
+
+## Uninstallation
+
+```powershell
+.\uninstall.ps1
+```
+
+This restores the original `msedge.exe` from the backup created during
+install.
+
+## Requirements
+
+- Windows 10 or 11
+- Microsoft Edge installed (does not need to be used)
+- PowerShell (included in Windows)
+
+## FAQ
+
+**Will this break Edge?**
+No. The installer backs up `msedge.exe` before replacing it.
+Run `uninstall.ps1` at any time to restore it fully.
+
+**Will antivirus flag it?**
+Possibly. Replacing a system executable is unusual behaviour. If your
+AV complains, add the Edge Application directory to its exclusion list,
+or build the binary yourself from source.
+
+**Does it work with browsers other than Edge?**
+Yes. Porcupine copies the URL — you paste it into any browser you like.
+
+## License
+
+BSD 3-Clause
